@@ -4,10 +4,10 @@ import (
 	"bufio"
 	"io"
 	"os"
+	"strings"
 )
 
 // ReadAllLines reads all lines from a file and returns them as a slice of strings.
-// The last line may or may not have a newline character at the end.
 func ReadAllLines(path string) ([]string, error) {
 	var lines []string
 
@@ -30,7 +30,7 @@ func ReadAllLines(path string) ([]string, error) {
 		if err != nil && err != io.EOF {
 			return lines, err
 		}
-
+		line = strings.TrimRight(line, "\r\n")
 		lines = append(lines, line)
 
 		if err == io.EOF {
