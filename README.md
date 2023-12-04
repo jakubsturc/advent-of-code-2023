@@ -20,4 +20,6 @@
 
 * It seems it's easier to write your own implementation of a set then to choose which collection package to import. Am I doing it wrong? 👼
 * Part 1 works on the first run. 🥇
+* Part 2 worked with one small fix. 🥈
+* Live is good. 🍹
 

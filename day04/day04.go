@@ -26,6 +26,41 @@ func Part1(path string) (int, error) {
 	return sum, nil
 }
 
+func Part2(path string) (int, error) {
+	lines, err := shared.ReadAllLines(path)
+	if err != nil {
+		return 0, err
+	}
+
+	l := len(lines)
+	cnts := initCounts(l)
+
+	for i, line := range lines {
+		winning, having, err := parseLine(line)
+		if err != nil {
+			return 0, err
+		}
+		s := winning.intersect(having).len()
+		for j := 1; i+j < l && j <= s; j++ {
+			cnts[i+j] += cnts[i]
+		}
+	}
+
+	sum := 0
+	for _, cnt := range cnts {
+		sum += cnt
+	}
+	return sum, nil
+}
+
+func initCounts(len int) []int {
+	result := make([]int, len)
+	for i := 0; i < len; i++ {
+		result[i] = 1
+	}
+	return result
+}
+
 func parseLine(line string) (set, set, error) {
 	// parse line into two sets Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
 	parts := strings.Split(line, ": ")

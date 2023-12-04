@@ -25,3 +25,25 @@ func TestPart1(t *testing.T) {
 		t.Errorf("Expected 25571, got %d", result)
 	}
 }
+
+func TestPart2Example1(t *testing.T) {
+	result, err := Part2("./example1.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if result != 30 {
+		t.Errorf("Expected 30, got %d", result)
+	}
+}
+
+func TestPart2(t *testing.T) {
+	result, err := Part2("./input.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if result != 8805731 {
+		t.Errorf("Expected 8805731, got %d", result)
+	}
+}
