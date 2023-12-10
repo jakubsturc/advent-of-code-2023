@@ -116,7 +116,7 @@ func TestSubtract_PartialIntersectionMiddle(t *testing.T) {
 		t.Errorf("Expected 2 intervals, got %d", len(result))
 	}
 
-	expected := []interval{interval{0, 2}, interval{4, 6}}
+	expected := []interval{{0, 2}, {4, 6}}
 	if result[0] != expected[0] || result[1] != expected[1] {
 		t.Errorf("Expected %v, got %v", expected, result)
 	}

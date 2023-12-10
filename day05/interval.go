@@ -24,16 +24,16 @@ func (this interval) subtract(other interval) []interval {
 		if overlap.length == this.length {
 			return nil
 		}
-		return []interval{interval{this.start + overlap.length, this.length - overlap.length}}
+		return []interval{{this.start + overlap.length, this.length - overlap.length}}
 	}
 
 	if overlap.start+overlap.length == this.start+this.length {
-		return []interval{interval{this.start, overlap.start - this.start}}
+		return []interval{{this.start, overlap.start - this.start}}
 	}
 
 	return []interval{
-		interval{this.start, overlap.start - this.start},
-		interval{overlap.start + overlap.length, this.start + this.length - overlap.start - overlap.length}}
+		{this.start, overlap.start - this.start},
+		{overlap.start + overlap.length, this.start + this.length - overlap.start - overlap.length}}
 }
 
 func min2(a, b uint64) uint64 {
