@@ -23,3 +23,8 @@
 * Part 2 worked with one small fix. 🥈
 * Live is good. 🍹
 
+## Day 5: If You Give A Seed A Fertilizer
+
+* After a long week in work, I am back to AoC. 🎉
+* Rather long one. I am glad, I was not facing any difficulties. 🐌
+* Copilot helping with test generation, implementations tends to be buggy. 🤖
