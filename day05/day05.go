@@ -26,6 +26,29 @@ func Part1(path string) (uint64, error) {
 		seeds[i] = interval{seedStart, 1}
 	}
 
+	return solve(seeds, filters)
+}
+
+func Part2(path string) (uint64, error) {
+	lines, err := shared.ReadAllLines(path)
+	if err != nil {
+		return 0, err
+	}
+
+	seedStarts, filters, err := parse(lines)
+	if err != nil {
+		return 0, err
+	}
+
+	seeds := make([]interval, len(seedStarts)/2)
+	for i := 0; i < len(seedStarts); i += 2 {
+		seeds[i/2] = interval{seedStarts[i], seedStarts[i+1]}
+	}
+
+	return solve(seeds, filters)
+}
+
+func solve(seeds []interval, filters []filter) (uint64, error) {
 	min, hasMin := uint64(0), false
 
 	for _, seed := range seeds {
