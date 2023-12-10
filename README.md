@@ -28,3 +28,9 @@
 * After a long week in work, I am back to AoC. 🎉
 * Rather long one. I am glad, I was not facing any difficulties. 🐌
 * Copilot helping with test generation, implementations tends to be buggy. 🤖
+
+## Day 6: Wait For It
+
+* Both parts right at the first run. 🥇
+* Part 2 took 40ms on my notebook. Go is fast. 🏎️
+* I am wondering if Part 2 is a trap for Python developers. 🐍
