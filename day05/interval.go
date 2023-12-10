@@ -36,6 +36,18 @@ func (this interval) subtract(other interval) []interval {
 		{overlap.start + overlap.length, this.start + this.length - overlap.start - overlap.length}}
 }
 
+func (this interval) subtractMany(others []interval) []interval {
+	res := []interval{this}
+	for _, other := range others {
+		var newRes []interval
+		for _, r := range res {
+			newRes = append(newRes, r.subtract(other)...)
+		}
+		res = newRes
+	}
+	return res
+}
+
 func min2(a, b uint64) uint64 {
 	if a < b {
 		return a

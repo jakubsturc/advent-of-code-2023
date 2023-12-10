@@ -121,3 +121,88 @@ func TestSubtract_PartialIntersectionMiddle(t *testing.T) {
 		t.Errorf("Expected %v, got %v", expected, result)
 	}
 }
+
+func TestSubtract_FullIntersection(t *testing.T) {
+	a := interval{0, 10}
+	b := interval{0, 10}
+
+	result := a.subtract(b)
+
+	if len(result) != 0 {
+		t.Errorf("Expected 0 intervals, got %d", len(result))
+	}
+}
+
+func TestSubtractMany_NoIntersection(t *testing.T) {
+	a := interval{0, 10}
+	b := []interval{{11, 10}, {12, 10}}
+
+	result := a.subtractMany(b)
+
+	if len(result) != 1 {
+		t.Errorf("Expected 1 interval, got %d", len(result))
+	}
+
+	if result[0] != a {
+		t.Errorf("Expected %v, got %v", a, result[0])
+	}
+}
+
+func TestSubtractMany_PartialIntersectionEnd(t *testing.T) {
+	a := interval{0, 10}
+	b := []interval{{5, 10}, {6, 10}}
+
+	result := a.subtractMany(b)
+
+	if len(result) != 1 {
+		t.Errorf("Expected 1 interval, got %d", len(result))
+	}
+
+	expected := interval{0, 5}
+	if result[0] != expected {
+		t.Errorf("Expected %v, got %v", expected, result[0])
+	}
+}
+
+func TestSubtractMany_PartialIntersectionStart(t *testing.T) {
+	a := interval{5, 10}
+	b := []interval{{0, 10}, {1, 10}}
+
+	result := a.subtractMany(b)
+
+	if len(result) != 1 {
+		t.Errorf("Expected 1 interval, got %d", len(result))
+	}
+
+	expected := interval{11, 4}
+	if result[0] != expected {
+		t.Errorf("Expected %v, got %v", expected, result[0])
+	}
+}
+
+func TestSubtractMany_PartialIntersectionMiddle(t *testing.T) {
+	a := interval{0, 10}
+	b := []interval{{2, 2}, {4, 2}}
+
+	result := a.subtractMany(b)
+
+	if len(result) != 2 {
+		t.Errorf("Expected 2 intervals, got %d", len(result))
+	}
+
+	expected := []interval{{0, 2}, {6, 4}}
+	if result[0] != expected[0] || result[1] != expected[1] {
+		t.Errorf("Expected %v, got %v", expected, result)
+	}
+}
+
+func TestSubtractMany_FullIntersection(t *testing.T) {
+	a := interval{0, 10}
+	b := []interval{{0, 2}, {2, 8}}
+
+	result := a.subtractMany(b)
+
+	if len(result) != 0 {
+		t.Errorf("Expected 0 intervals, got %d", len(result))
+	}
+}

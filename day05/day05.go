@@ -16,42 +16,59 @@ func Part1(path string) (uint64, error) {
 		return 0, err
 	}
 
-	seeds, filters, err := parse(lines)
-
+	seedStarts, filters, err := parse(lines)
 	if err != nil {
 		return 0, err
 	}
 
-	var locations []uint64
+	seeds := make([]interval, len(seedStarts))
+	for i, seedStart := range seedStarts {
+		seeds[i] = interval{seedStart, 1}
+	}
+
+	min, hasMin := uint64(0), false
+
 	for _, seed := range seeds {
-		current := seed
+		current := []interval{seed}
 		for _, filter := range filters {
 			current = filter.apply(current)
 		}
-		locations = append(locations, current)
-	}
-
-	result := min64(locations)
-
-	return result, nil
-}
-
-func (f filter) apply(value uint64) uint64 {
-	for _, scope := range f.scopes {
-		if value >= scope.source && value < scope.source+scope.length {
-			return value + scope.destination - scope.source
+		for _, n := range current {
+			if !hasMin || n.start < min {
+				min = n.start
+				hasMin = true
+			}
 		}
 	}
-	return value
+
+	if !hasMin {
+		return 0, errors.New("no min")
+	}
+
+	return min, nil
 }
 
-func min64(numbers []uint64) uint64 {
-	var res uint64
-	for i, n := range numbers {
-		if i == 0 || n < res {
-			res = n
+func (f filter) apply(ns []interval) []interval {
+	var res []interval
+	for _, n := range ns {
+		var mapped []interval // numbers which has been successfully mapped
+		for _, scope := range f.scopes {
+			source := interval{scope.source, scope.length}
+			found, val := source.intersection(n)
+			if !found {
+				continue
+			}
+			mapped = append(mapped, val)
+			start := scope.destination + val.start - scope.source
+			destination := interval{start, val.length}
+			res = append(res, destination)
+		}
+		notMapped := n.subtractMany(mapped)
+		for _, n := range notMapped {
+			res = append(res, n)
 		}
 	}
+
 	return res
 }
 

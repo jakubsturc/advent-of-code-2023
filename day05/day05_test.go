@@ -13,7 +13,7 @@ func TestPart1Example1(t *testing.T) {
 	}
 }
 
-func TestPart1Example2(t *testing.T) {
+func TestPart1(t *testing.T) {
 	result, err := Part1("./input.txt")
 	if err != nil {
 		t.Fatal(err)
